@@ -1,1 +1,47 @@
 <p>vendors-component works!</p>
+<div class="vendors">
+  <div class="header">
+    <h1>Vendors</h1>
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      <mat-icon>add</mat-icon> Add Vendor
+    </button>
+  </div>
+
+  <mat-card>
+    <mat-card-content>
+      <table mat-table [dataSource]="vendors" class="full-width">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let vendor">{{vendor.name}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let vendor">{{vendor.email}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="company">
+          <th mat-header-cell *matHeaderCellDef>Company</th>
+          <td mat-cell *matCellDef="let vendor">{{vendor.company}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>Phone</th>
+          <td mat-cell *matCellDef="let vendor">{{vendor.phone}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let vendor">
+            <button mat-icon-button (click)="openDialog(vendor)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

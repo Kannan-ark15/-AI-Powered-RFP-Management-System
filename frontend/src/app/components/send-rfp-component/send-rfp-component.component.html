@@ -1,1 +1,47 @@
-<p>send-rfp-component works!</p>
+<div class="send-rfp">
+  <h1>Send RFP</h1>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Select RFP</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <mat-label>Choose RFP</mat-label>
+        <mat-select [(ngModel)]="selectedRfpId" (selectionChange)="onRfpSelected()">
+          <mat-option *ngFor="let rfp of rfps" [value]="rfp._id">
+            {{rfp.title}} ({{rfp.status}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="selectedRfp" class="rfp-details">
+        <h3>{{selectedRfp.title}}</h3>
+        <p>{{selectedRfp.description}}</p>
+        <p><strong>Budget:</strong> ${{selectedRfp.budget?.toLocaleString()}}</p>
+        <p><strong>Deadline:</strong> {{selectedRfp.deadline | date}}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="selectedRfpId">
+    <mat-card-header>
+      <mat-card-title>Select Vendors</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-selection-list [(ngModel)]="selectedVendorIds">
+        <mat-list-option *ngFor="let vendor of vendors" [value]="vendor._id">
+          {{vendor.name}} - {{vendor.email}}
+        </mat-list-option>
+      </mat-selection-list>
+
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="sendRfp()" 
+        [disabled]="!selectedVendorIds.length || sending">
+        {{sending ? 'Sending...' : 'Send RFP'}}
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

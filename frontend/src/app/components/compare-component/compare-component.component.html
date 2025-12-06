@@ -1,1 +1,97 @@
-<p>compare-component works!</p>
+<div class="compare">
+  <h1>Compare Proposals</h1>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <mat-label>Select RFP</mat-label>
+        <mat-select [(ngModel)]="selectedRfpId" (selectionChange)="loadProposals()">
+          <mat-option *ngFor="let rfp of rfps" [value]="rfp._id">
+            {{rfp.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="compareProposals()" 
+        [disabled]="!proposals.length || comparing">
+        {{comparing ? 'Analyzing...' : 'Compare with AI'}}
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="proposals.length > 0">
+    <mat-card-header>
+      <mat-card-title>Proposals Comparison</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <table mat-table [dataSource]="proposals" class="full-width">
+        <ng-container matColumnDef="vendor">
+          <th mat-header-cell *matHeaderCellDef>Vendor</th>
+          <td mat-cell *matCellDef="let proposal">{{getVendorName(proposal.vendorId)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="cost">
+          <th mat-header-cell *matHeaderCellDef>Cost</th>
+          <td mat-cell *matCellDef="let proposal">
+            ${{proposal.parsedData.proposedCost?.toLocaleString()}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="timeline">
+          <th mat-header-cell *matHeaderCellDef>Timeline</th>
+          <td mat-cell *matCellDef="let proposal">{{proposal.parsedData.timeline}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="teamSize">
+          <th mat-header-cell *matHeaderCellDef>Team Size</th>
+          <td mat-cell *matCellDef="let proposal">{{proposal.parsedData.teamSize}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="experience">
+          <th mat-header-cell *matHeaderCellDef>Experience</th>
+          <td mat-cell *matCellDef="let proposal">{{proposal.parsedData.experience}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="comparison">
+    <mat-card-header>
+      <mat-card-title>AI Analysis</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngFor="let item of comparison.comparison" class="comparison-item">
+        <h3>{{item.vendorName}} - Score: {{item.score}}/100</h3>
+        
+        <div class="strengths">
+          <strong>Strengths:</strong>
+          <mat-chip-set>
+            <mat-chip *ngFor="let strength of item.strengths" color="primary">
+              {{strength}}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <div class="weaknesses">
+          <strong>Weaknesses:</strong>
+          <mat-chip-set>
+            <mat-chip *ngFor="let weakness of item.weaknesses" color="warn">
+              {{weakness}}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+      </div>
+
+      <div class="recommendation">
+        <h3>Recommendation</h3>
+        <p>{{comparison.recommendation}}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

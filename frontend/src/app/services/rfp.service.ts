@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable<any>  } from 'rxjs';
+import { Observable} from 'rxjs';
 import { RFP } from '../models/rfp.model';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment'; 
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class RfpService {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-  update(id: string, rfp: Partial): Observable<any>  {
+  update(id: string, rfp: Partial<any>): Observable<any>  {
     return this.http.put(`${this.apiUrl}/${id}`, rfp);
   }
 

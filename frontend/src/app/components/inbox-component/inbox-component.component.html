@@ -1,1 +1,66 @@
-<p>inbox-component works!</p>
+<div class="inbox">
+  <h1>Proposal Inbox</h1>
+
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <mat-label>Select RFP</mat-label>
+        <mat-select [(ngModel)]="selectedRfpId" (selectionChange)="loadProposals()">
+          <mat-option *ngFor="let rfp of rfps" [value]="rfp._id">
+            {{rfp.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="proposals.length > 0">
+    <mat-card-header>
+      <mat-card-title>Proposals ({{proposals.length}})</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let proposal of proposals">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{getVendorName(proposal.vendorId)}}
+            </mat-panel-title>
+            <mat-panel-description>
+              ${{proposal.parsedData.proposedCost?.toLocaleString()}} - {{proposal.parsedData.timeline}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="proposal-details">
+            <p><strong>From:</strong> {{proposal.vendorEmail}}</p>
+            <p><strong>Received:</strong> {{proposal.receivedAt | date:'medium'}}</p>
+            <p><strong>Subject:</strong> {{proposal.subject}}</p>
+
+            <h3>Parsed Details</h3>
+            <p><strong>Cost:</strong> ${{proposal.parsedData.proposedCost?.toLocaleString()}}</p>
+            <p><strong>Timeline:</strong> {{proposal.parsedData.timeline}}</p>
+            <p><strong>Team Size:</strong> {{proposal.parsedData.teamSize}}</p>
+            <p><strong>Experience:</strong> {{proposal.parsedData.experience}}</p>
+            
+            <div *ngIf="proposal.parsedData.keyFeatures?.length">
+              <strong>Key Features:</strong>
+              <mat-chip-set>
+                <mat-chip *ngFor="let feature of proposal.parsedData.keyFeatures">
+                  {{feature}}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+
+            <h3>Original Email</h3>
+            <div class="email-body">{{proposal.body}}</div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="selectedRfpId && proposals.length === 0">
+    <mat-card-content>
+      <p>No proposals received yet for this RFP.</p>
+    </mat-card-content>
+  </mat-card>
+</div>

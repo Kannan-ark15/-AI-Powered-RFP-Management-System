@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
-import { RfpService } from '../../services/rfp.service';
+import { RfpService } from '../../services/rfp.service'; 
 import { RFP } from '../../models/rfp.model';
 
 @Component({
@@ -21,8 +21,8 @@ import { RFP } from '../../models/rfp.model';
     MatTableModule,
     MatChipsModule
   ],
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  templateUrl: './dashboard-component.component.html',
+  styleUrls: ['./dashboard-component.component.css']
 })
 export class DashboardComponent implements OnInit {
   rfps: RFP[] = [];
@@ -36,9 +36,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.rfpService.getAll().subscribe(rfps => {
       this.rfps = rfps;
-      this.draftCount = rfps.filter(r => r.status === 'draft').length;
-      this.sentCount = rfps.filter(r => r.status === 'sent').length;
-      this.closedCount = rfps.filter(r => r.status === 'closed').length;
+      this.draftCount = rfps.filter((r: { status: string; }) => r.status === 'draft').length;
+      this.sentCount = rfps.filter((r: { status: string; }) => r.status === 'sent').length;
+      this.closedCount = rfps.filter((r: { status: string; }) => r.status === 'closed').length;
     });
   }
 

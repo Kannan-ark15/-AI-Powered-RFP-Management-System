@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable<any>  } from 'rxjs';
+import { Observable} from 'rxjs';
 import { Vendor } from '../models/vendor.model';
 import { environment } from '../../environments/environment';
 
@@ -20,7 +20,7 @@ export class VendorService {
     return this.http.get(this.apiUrl);
   }
 
-  update(id: string, vendor: Partial): Observable<any>  {
+  update(id: string, vendor: Partial<any>): Observable<any>  {
     return this.http.put(`${this.apiUrl}/${id}`, vendor);
   }
 }

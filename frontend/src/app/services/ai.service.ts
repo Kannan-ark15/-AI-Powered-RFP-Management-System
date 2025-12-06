@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable<any>  } from 'rxjs';
+import { Observable} from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -11,15 +11,15 @@ export class AiService {
 
   constructor(private http: HttpClient) {}
 
-  parseRFP(text: string): Observable<any> <any> {
+  parseRFP(text: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/parse-rfp`, { naturalLanguageText: text });
   }
 
-  parseProposal(emailBody: string): Observable<any>  <any> {
+  parseProposal(emailBody: string): Observable<any>{
     return this.http.post(`${this.apiUrl}/parse-proposal`, { emailBody });
   }
 
-  compare(rfpId: string): Observable<any> <any>  {
+  compare(rfpId: string): Observable<any>{
     return this.http.post(`${this.apiUrl}/compare`, { rfpId });
   }
 }

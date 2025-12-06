@@ -10,8 +10,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { RfpService } from '../../services/rfp.service';
-import { AiService } from '../../services/ai.service';
+import { RfpService } from '../../services/rfp.service'; 
+import { AiService } from '../../services/ai.service'; 
 
 @Component({
   selector: 'app-create-rfp',
@@ -29,8 +29,8 @@ import { AiService } from '../../services/ai.service';
     MatIconModule,
     MatSnackBarModule
   ],
-  templateUrl: './create-rfp.component.html',
-  styleUrls: ['./create-rfp.component.css']
+  templateUrl: './create-rfp-component.component.html',
+  styleUrls: ['./create-rfp-component.component.css']
 })
 export class CreateRfpComponent {
   showForm = false;

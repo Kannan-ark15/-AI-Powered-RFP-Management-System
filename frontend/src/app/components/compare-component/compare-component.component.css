@@ -1,0 +1,45 @@
+.compare {
+  padding: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+.comparison-item {
+  margin-bottom: 30px;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.comparison-item h3 {
+  margin-top: 0;
+  color: #3f51b5;
+}
+
+.strengths,
+.weaknesses {
+  margin: 15px 0;
+}
+
+.recommendation {
+  margin-top: 30px;
+  padding: 20px;
+  background: #e3f2fd;
+  border-radius: 4px;
+  border-left: 4px solid #2196f3;
+}
+
+.recommendation h3 {
+  margin-top: 0;
+  color: #1976d2;
+}
+
+mat-chip-set {
+  margin-top: 10px;
+}
