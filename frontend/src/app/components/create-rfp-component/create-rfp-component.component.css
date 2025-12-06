@@ -1,0 +1,29 @@
+.create-rfp {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.requirement-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flex-grow {
+  flex: 1;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+mat-form-field {
+  margin-bottom: 15px;
+}

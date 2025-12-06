@@ -1,0 +1,29 @@
+.dashboard {
+  padding: 20px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stats mat-card {
+  text-align: center;
+}
+
+.stats h2 {
+  font-size: 48px;
+  margin: 0;
+  color: #3f51b5;
+}
+
+.stats p {
+  margin: 10px 0 0;
+  color: #666;
+}
+
+.full-width {
+  width: 100%;
+}

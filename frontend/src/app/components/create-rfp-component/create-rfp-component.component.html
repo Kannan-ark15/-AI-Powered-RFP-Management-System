@@ -1,0 +1,100 @@
+<div class="create-rfp">
+  <h1>Create RFP</h1>
+
+  <mat-card *ngIf="!showForm">
+    <mat-card-header>
+      <mat-card-title>Describe Your RFP</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="full-width">
+        <mat-label>Enter RFP description in natural language</mat-label>
+        <textarea 
+          matInput 
+          [(ngModel)]="naturalText" 
+          rows="10"
+          placeholder="e.g., We need a mobile app for fitness tracking with workout logging, nutrition tracking, and social features. Budget is around $100k and we need it in 3 months.">
+        </textarea>
+      </mat-form-field>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="parseWithAI()" 
+        [disabled]="!naturalText || parsing">
+        {{parsing ? 'Parsing...' : 'Parse with AI'}}
+      </button>
+      <button 
+        mat-button 
+        (click)="showForm = true" 
+        style="margin-left: 10px;">
+        Manual Entry
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="showForm">
+    <mat-card-header>
+      <mat-card-title>RFP Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="rfpForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="full-width">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="4"></textarea>
+        </mat-form-field>
+
+        <div formArrayName="requirements">
+          <label>Requirements</label>
+          <div *ngFor="let req of requirements.controls; let i = index" class="requirement-row">
+            <mat-form-field class="flex-grow">
+              <input matInput [formControlName]="i">
+            </mat-form-field>
+            <button 
+              mat-icon-button 
+              type="button" 
+              (click)="removeRequirement(i)" 
+              color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <button mat-button type="button" (click)="addRequirement()">
+            <mat-icon>add</mat-icon> Add Requirement
+          </button>
+        </div>
+
+        <mat-form-field class="full-width">
+          <mat-label>Deadline</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="deadline" required>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Budget</mat-label>
+          <input matInput type="number" formControlName="budget" required>
+          <span matPrefix>$ </span>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Contact Email</mat-label>
+          <input matInput type="email" formControlName="contactEmail" required>
+        </mat-form-field>
+
+        <div class="actions">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            type="submit" 
+            [disabled]="!rfpForm.valid || submitting">
+            {{submitting ? 'Creating...' : 'Create RFP'}}
+          </button>
+          <button mat-button type="button" (click)="cancel()">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
