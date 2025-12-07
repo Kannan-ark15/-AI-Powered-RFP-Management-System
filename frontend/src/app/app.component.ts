@@ -19,12 +19,9 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatSidenavModule
   ],
-  template: `
-  `,
-  styles: [`
-    .spacer { flex: 1 1 auto; }
-    .container { padding: 20px; max-width: 1400px; margin: 0 auto; }
-    .active { background-color: rgba(255,255,255,0.1); }
-  `]
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {}
+export class AppComponent {
+  title = 'RFP Management System';
+}

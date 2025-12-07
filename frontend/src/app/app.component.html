@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+  <span>RFP Management System</span>
+  <span class="spacer"></span>
+  <button mat-button routerLink="/dashboard" routerLinkActive="active">
+    Dashboard
+  </button>
+  <button mat-button routerLink="/create-rfp" routerLinkActive="active">
+    Create RFP
+  </button>
+  <button mat-button routerLink="/vendors" routerLinkActive="active">
+    Vendors
+  </button>
+  <button mat-button routerLink="/send-rfp" routerLinkActive="active">
+    Send RFP
+  </button>
+  <button mat-button routerLink="/inbox" routerLinkActive="active">
+    Inbox
+  </button>
+  <button mat-button routerLink="/compare" routerLinkActive="active">
+    Compare
+  </button>
+</mat-toolbar>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
