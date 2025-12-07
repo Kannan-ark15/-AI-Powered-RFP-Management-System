@@ -42,25 +42,35 @@ async function callAI(prompt) {
 }
 
 function mockAIResponse(prompt) {
-  if (prompt.includes('parse this RFP')) {
-    return JSON.stringify({
+  console.log('Mock AI called with prompt containing:', prompt.substring(0, 100));
+  
+  if (prompt.includes('Parse this RFP')) {
+    const result = {
       title: 'Website Development Project',
       description: 'Build a modern responsive website',
       requirements: ['Responsive design', 'SEO optimization', 'CMS integration'],
       deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
       budget: 50000,
       contactEmail: 'project@company.com'
-    });
-  } else if (prompt.includes('parse this vendor proposal')) {
-    return JSON.stringify({
+    };
+    console.log('Returning mock RFP:', result);
+    return JSON.stringify(result);
+  } 
+  
+  if (prompt.includes('parse this vendor proposal')) {
+    const result = {
       proposedCost: 45000,
       timeline: '12 weeks',
       keyFeatures: ['Custom CMS', 'Mobile-first design', 'Advanced SEO'],
       experience: '10+ years in web development',
       teamSize: 5
-    });
-  } else if (prompt.includes('compare these proposals')) {
-    return JSON.stringify({
+    };
+    console.log('Returning mock proposal:', result);
+    return JSON.stringify(result);
+  } 
+  
+  if (prompt.includes('Compare these proposals')) {
+    const result = {
       comparison: [
         {
           vendorName: 'Tech Solutions Inc',
@@ -70,12 +80,18 @@ function mockAIResponse(prompt) {
         }
       ],
       recommendation: 'Tech Solutions Inc offers the best value with competitive pricing and reasonable timeline.'
-    });
+    };
+    console.log('Returning mock comparison:', result);
+    return JSON.stringify(result);
   }
+  
+  console.log('No matching prompt pattern found');
   return '{}';
 }
 
 exports.parseRFP = async (naturalLanguageText) => {
+  console.log('parseRFP called with:', naturalLanguageText);
+  
   const prompt = `Parse this RFP description into structured JSON format with fields: title, description, requirements (array), deadline (ISO date), budget (number), contactEmail.
 
 RFP Text:
@@ -83,21 +99,28 @@ ${naturalLanguageText}
 
 Return only valid JSON.`;
 
+  console.log('Calling AI with prompt');
   const response = await callAI(prompt);
+  console.log('AI Response:', response);
+  
   try {
-    return JSON.parse(response);
+    const cleaned = response.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    console.log('Cleaned response:', cleaned);
+    const parsed = JSON.parse(cleaned);
+    console.log('Parsed:', parsed);
+    return parsed;
   } catch (e) {
+    console.error('Parse error:', e);
     return {
       title: 'Parsed RFP',
       description: naturalLanguageText,
-      requirements: [],
-      deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-      budget: 0,
-      contactEmail: ''
+      requirements: ['Requirement 1', 'Requirement 2'],
+      deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      budget: 50000,
+      contactEmail: 'contact@example.com'
     };
   }
 };
-
 exports.parseProposal = async (emailBody) => {
   const prompt = `Parse this vendor proposal email into structured JSON with fields: proposedCost (number), timeline (string), keyFeatures (array), experience (string), teamSize (number).
 
